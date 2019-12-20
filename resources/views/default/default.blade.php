@@ -7,15 +7,17 @@
 <body>
 {{--    <img src="{{ asset("img/banner.jpg") }}">--}}
     @include('default._header')
-    @include('default._messages')
-    @include('default._errors')
+
     <div class="container">
         <div class="offset-md-1 col-md-10">
+            @include('default._messages')
+            @include('default._errors')
+
             @yield('content')
             @include('default._footer')
 
         </div>
     </div>
-
+    <script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

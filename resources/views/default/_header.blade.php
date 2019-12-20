@@ -10,6 +10,7 @@
         <ul class="navbar-nav justify-content-end">
             @include('default._navibar')
             @include('users.panel')
+
         </ul>
     </div>
 </nav>

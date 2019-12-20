@@ -99,7 +99,7 @@ class ProjectsController extends Controller
         $project->post_id = $post->id;
         $project->save();
 
-        session()->flash('info', '创建项目成功！');
+        session()->flash('success', '创建项目成功！');
 
         return redirect()->route('projects.show', [$project]);
     }

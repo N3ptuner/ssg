@@ -15,3 +15,13 @@
         </form>
     </td>
 </tr>
+
+<div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+    <div class="thumbnail">
+        <img src="{{ asset('img/cat.gif') }}" style="height: 20px; width: 20px" alt="..."class="img-responsive">
+        <div class="caption">
+            <h4>{{ $project->name }}</h4>
+{{--            <p style="color:red;"></p>--}}
+        </div>
+    </div>
+</div>

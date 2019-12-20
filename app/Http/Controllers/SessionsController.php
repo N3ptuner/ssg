@@ -20,19 +20,19 @@ class SessionsController extends Controller
 
         if(Auth::attempt($credentials))
         {
-            session()->flash('info', '欢迎回来！');
+            session()->flash('success', '欢迎回来！');
             return redirect()->route('home');
         }
         else
         {
-            session()->flash('info', '登陆错误');
+            session()->flash('success', '登陆错误');
             return redirect()->back()->withInput();
         }
     }
     public function destroy()
     {
         Auth::logout();
-        session()->flash('info', '账户已登出');
+        session()->flash('success', '账户已登出');
         return redirect('login');
     }
 }

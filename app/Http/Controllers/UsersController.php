@@ -31,7 +31,6 @@ class UsersController extends Controller
             'username' => 'required|max:50|unique:users',
             'email' => 'required|email|unique:users|max:255',
             'password'=>'required|confirmed|min:6'
-
         ]);
 
         $user = User::create([
@@ -43,7 +42,7 @@ class UsersController extends Controller
 
 
         Auth::login($user);
-        session()->flash('info', '注册成功');
+        session()->flash('success', '注册成功');
 
         return redirect()->route('users.show', [$user]);
     }
@@ -78,7 +77,7 @@ class UsersController extends Controller
             $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
-        session()->flash('info', '更新成功');
+        session()->flash('success', '更新成功');
         return redirect()->route('users.edit', $user);
     }
 }
