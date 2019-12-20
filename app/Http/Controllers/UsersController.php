@@ -54,14 +54,7 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
-    public function projects(User $user)
-    {
-        $this->authorize('self', $user);
-        //$projects = $user->projects()->orderBy('created_at', 'desc');
-        $projects = $user->projects()
-                         ->paginate(30);
-        return view('users.projects', compact('user', 'projects'));
-    }
+
 
     public function edit(User $user)
     {

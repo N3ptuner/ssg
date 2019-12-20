@@ -1,4 +1,4 @@
-@extends('home')
+@extends('default/default')
 @section('title',  $project->name )
 
 @section('content')

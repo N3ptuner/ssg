@@ -19,6 +19,12 @@ class ProjectsController extends Controller
             'except'=>['show']
         ]);
     }
+    public function show_by_user(User $user)
+    {
+        $projects = $user->projects()
+            ->paginate(30);
+        return view('projects.show_by_user', compact('user', 'projects'));
+    }
 
     public function show(Project $project)
     {

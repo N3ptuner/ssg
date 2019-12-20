@@ -1,4 +1,4 @@
-@extends('home')
+@extends('default/default')
 @section('title', '新建项目')
 
 @section('content')
