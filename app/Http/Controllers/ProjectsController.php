@@ -23,7 +23,37 @@ class ProjectsController extends Controller
     {
         $projects = $user->projects()
             ->paginate(30);
-        return view('projects.show_by_user', compact('user', 'projects'));
+
+        $render_game = false;
+        $render_music = false;
+        $render_picture = false;
+        $render_tool = false;
+        foreach ($projects as $project)
+        {
+            if($project->product()->get()[0]->classification == 'game')
+            {
+                $render_game = true;
+            }
+
+            if($project->product()->get()[0]->classification == 'music')
+            {
+                $render_music = true;
+            }
+
+            if($project->product()->get()[0]->classification == 'picture')
+            {
+                $render_picture = true;
+            }
+
+            if($project->product()->get()[0]->classification == 'tool')
+            {
+                $render_tool = true;
+            }
+            if($render_game && $render_music &&$render_picture && $render_tool) break;
+        }
+
+
+        return view('projects.show_by_user', compact('user', 'projects', 'render_tool', 'render_picture', 'render_music', 'render_game'));
     }
 
     public function show(Project $project)
@@ -101,7 +131,7 @@ class ProjectsController extends Controller
 
         session()->flash('success', '创建项目成功！');
 
-        return redirect()->route('projects.show', [$project]);
+        return redirect()->route('projects.show_by_user', Auth::user());
     }
     public function destroy(Project $project)
     {
@@ -112,7 +142,7 @@ class ProjectsController extends Controller
 //        $post = $post[0];
 //        $product->delete();
         $project->delete();
-        return redirect()->route('users.projects', Auth::user());
+        return redirect()->route('projects.show_by_user', Auth::user());
     }
 
     public function edit(Project $project)
