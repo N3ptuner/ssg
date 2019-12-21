@@ -52,7 +52,6 @@
                         <option value="music">音乐</option>
                         <option value="picture">图片</option>
                         <option value="tool">工具</option>
-
                     </select>
                 </div>
                 <div class="form-group">

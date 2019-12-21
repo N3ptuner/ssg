@@ -46,3 +46,5 @@ Route::get('follows/{user}/destroy', 'FollowsController@destroy')->name('follows
 
 Route::get('followers/{user}', 'FollowsController@followers')->name('follows.followers');
 Route::get('followings/{user}', 'FollowsController@followings')->name('follows.followings');
+
+Route::resource('posts', 'PostsController');

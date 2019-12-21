@@ -8,7 +8,9 @@
                     <form method="POST" action="{{ route("projects.show", $project) }}">
                         {{ csrf_field() }}
                         {{ method_field("PATCH") }}
-                        <button type="submit" class="btn btn-secondary btn-sm">修改</button>
+                        <button title="修改" type="submit" class="btn btn-secondary btn-sm">
+                            <i class="fa fa-edit"></i>
+                        </button>
 
                     </form>
                 </a>
@@ -16,7 +18,17 @@
                     <form method="POST" action="{{ route("projects.destroy", $project) }}">
                         {{ csrf_field() }}
                         {{ method_field("DELETE") }}
-                        <button type="submit" class="btn btn-danger btn-sm">删除</button>
+                        <button title="删除" type="submit" class="btn btn-danger btn-sm">
+                            <i class="fa fa-remove"></i>
+                        </button>
+                    </form>
+                </a>
+                <a href="#" class="card-link">
+                    <form method="POST" action="{{ route("posts.create", $project) }}">
+                        {{ csrf_field() }}
+                        <button title="新建项目日志" type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-plus-square-o"></i>
+                        </button>
                     </form>
                 </a>
             </div>

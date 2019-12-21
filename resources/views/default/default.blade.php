@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title', '深水港')</title>
     <link rel="stylesheet" href="{{ mix("css/app.css") }}">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
 {{--    <img src="{{ asset("img/banner.jpg") }}">--}}
