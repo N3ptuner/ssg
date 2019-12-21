@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
 
+    public function creator()
+    {
+        return $this->belongsTo(User::class, "","creator_id");
+    }
     public function parent()
     {
         return $this->morphTo();
@@ -30,7 +34,7 @@ class Comment extends Model
 //    }
     protected $fillable = [
         'created_at', 'updated_at', 'content_md', 'parent_type',
-        'parent_id', 'level',
+        'parent_id', 'level', 'creator_id', 'deleted'
     ];
 
 

@@ -9,6 +9,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, "creator_id");
+    }
+
     public function follow(User $user)
     {
         $this->followings()->sync($user->id,false);

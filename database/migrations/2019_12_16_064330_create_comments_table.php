@@ -20,6 +20,9 @@ class CreateCommentsTable extends Migration
             $table->string('parent_type');
             $table->integer('parent_id');
             $table->integer('level')->default(0);
+            $table->integer('creator_id');
+            $table->boolean('deleted')->default(false);
+
         });
     }
 

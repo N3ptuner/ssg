@@ -1,8 +1,10 @@
-@if($comments != null)
+@if(!$comments->isEmpty())
     @foreach($comments as $comment)
-        <table style="border:3px #cccccc solid;" cellpadding="10" border='1'>
         @include("comments.card")
-        </table>
     @endforeach
+@else
+    <div class="card">
+        <p class="card-text text-md-center" style="margin-bottom: 20px; margin-top: 20px" >暂时没有评论哦~</p>
+    </div>
 @endif
 @include("comments.create_to_post")

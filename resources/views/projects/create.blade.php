@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label for="tag_list">标签：</label>
-                    <input class="form-control" type="text" name="tag_list">
+                    <input data-role="" class="form-control" type="text" name="tag_list">
                 </div>
                 <div class="form-group">
                     <label for="release_status">发布状态：</label>

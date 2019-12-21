@@ -6,6 +6,7 @@ use App\Post;
 use App\Comment;
 use App\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentsController extends Controller
 {
@@ -37,8 +38,8 @@ class CommentsController extends Controller
             'content_md' => $request->content_md,
             'parent_type' => $request->parent_type,
             'level' => $request->level,
-            'parent_id' => $request->parent_id
-
+            'parent_id' => $request->parent_id,
+            'creator_id' => Auth::user()->id,
         ]);
 
 
@@ -48,9 +49,15 @@ class CommentsController extends Controller
         //return view('projects.show', compact('project'));
         return redirect()->route('projects.show', $project);
     }
-    public function destroy()
+    public function destroy(Comment $comment)
     {
-
+        if(Auth::user()->id == $comment->creator_id)
+        {
+            $comment->update([
+               'deleted'=>true,
+            ]);
+        }
+        return redirect()->back();
     }
 
 

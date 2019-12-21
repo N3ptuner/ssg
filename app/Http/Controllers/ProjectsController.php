@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\ImageUploadHandler;
 use App\Project;
 use Illuminate\Validation\Rule;
 use App\Comment;
@@ -68,8 +69,9 @@ class ProjectsController extends Controller
         $creator = User::where('id', $project->creator_id)
                     ->get();
         $creator = $creator[0];
+        $product = $project->product()->get()[0];
         //$comments = $post->comments();
-        return view('projects.show', compact('project', 'post', 'comments', 'creator'));
+        return view('projects.show', compact( 'product','project', 'post', 'comments', 'creator'));
     }
     public function create()
     {
@@ -86,6 +88,10 @@ class ProjectsController extends Controller
 //            'visibility' => ['required', Rule::in(['public', 'draft'])],
 //            'template_id' => ['required', Rule::in(['1'])],
 //        ]);
+
+
+
+
         $project = Auth::user()->projects()->create([
             'name' => $request->project_name,
 
@@ -96,6 +102,10 @@ class ProjectsController extends Controller
             'creator_id' => Auth::user()->id,
         ]);
 
+        $img_handler = new ImageUploadHandler();
+        $img_location = $img_handler->save($request->cover, "projects/".$project->id."/", 'cover');
+//        var_dump($img_location);
+//        dd($img_location);
 //        $this->validate($request, [
 //            'product_name' => 'required|unique:products',
 //            'product_introduction' => 'required|max:100',
@@ -109,7 +119,7 @@ class ProjectsController extends Controller
             'updated_at' => now(),
             'name' => $request->product_name,
             'introduction' => $request->product_introduction,
-            'cover' => '#',
+            'cover' => $img_location['path'],
             'classification' => $request->classification,
             'files' => '#',
             'tag_list' => '#',
