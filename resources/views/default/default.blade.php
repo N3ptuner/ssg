@@ -3,7 +3,6 @@
 <head>
     <title>@yield('title', '深水港')</title>
     <link rel="stylesheet" href="{{ mix("css/app.css") }}">
-    <link rel="stylesheet" href="/public/css/bootstrap-tagsinput.css">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
 </head>
 <body>
@@ -20,7 +19,10 @@
 
         </div>
     </div>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="/public/js/bootstrap-tagsinput.js"></script>
+    <script src="{{ asset("js/tags.js")."?id=".random_int(1,100) }}"></script>
+
 </body>
 </html>

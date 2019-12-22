@@ -11,6 +11,7 @@ class ImageUploadHandler
 
     public function save($file, $folder, $file_prefix, $max_width = false)
     {
+        //dd($file);
         // 构建存储的文件夹规则，值如：uploads/images/avatars/201709/21/
         // 文件夹切割能让查找效率更高。
         $folder_name = "uploads/images/$folder/" . date("Ym/d", time());

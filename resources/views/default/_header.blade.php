@@ -6,11 +6,10 @@
     {{--@endif--}}
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">SSG App</a>
+        <a class="navbar-brand" href="/">深水港</a>
         <ul class="navbar-nav justify-content-end">
             @include('default._navibar')
             @include('users.panel')
-
         </ul>
     </div>
 </nav>

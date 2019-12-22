@@ -35,6 +35,7 @@ Route::get('projects/user/{user}', 'ProjectsController@show_by_user')->name('pro
 
 //产品资源路由
 Route::resource('products', 'ProductsController');
+Route::post('products/show_by_tags', 'ProductsController@show_by_tags')->name('products.show_by_tags');
 
 //评论资源路由
 Route::resource('comments', 'CommentsController');

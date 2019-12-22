@@ -2,7 +2,7 @@
     <div class="card mb-3 box-shadow">
         <img class="card-img-top" src="{{ asset($project->product()->get()[0]->cover) }}" style="height: 180px; width: 100%; display: block;">
         <div class="card-body">
-            <p class="card-text">项目名称</p>
+            <p class="card-text">{{ $project->name }}</p>
             <div class="form-inline">
                 <a href="#" class="card-link">
                     <form method="POST" action="{{ route("projects.show", $project) }}">

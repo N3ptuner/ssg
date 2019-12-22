@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="classification">分类：</label>
-                    <select class="form-control" name="classification" value="game">
+                    <select class="form-control" name="classification">
                         <option value="game">游戏</option>
                         <option value="music">音乐</option>
                         <option value="picture">图片</option>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\FileUploadHandler;
 use App\Handlers\ImageUploadHandler;
 use App\Project;
 use Illuminate\Validation\Rule;
@@ -79,6 +80,8 @@ class ProjectsController extends Controller
     }
     public function store(Request $request)
     {
+
+        //dd($request->files);
 //        $this->validate($request, [
 //            'project_name' => ['required|max:50', Rule::unique('projects')->where(function ($query) {
 //                return $query->where('creator_id', Auth::user()->id);
@@ -102,8 +105,7 @@ class ProjectsController extends Controller
             'creator_id' => Auth::user()->id,
         ]);
 
-        $img_handler = new ImageUploadHandler();
-        $img_location = $img_handler->save($request->cover, "projects/".$project->id."/", 'cover');
+
 //        var_dump($img_location);
 //        dd($img_location);
 //        $this->validate($request, [
@@ -119,12 +121,34 @@ class ProjectsController extends Controller
             'updated_at' => now(),
             'name' => $request->product_name,
             'introduction' => $request->product_introduction,
-            'cover' => $img_location['path'],
+            'cover' => "img/default_img.jpg",
             'classification' => $request->classification,
             'files' => '#',
             'tag_list' => '#',
             'release_status' => $request->release_status,
         ]);
+
+
+        if($request->cover != null)
+        {
+            $img_handler = new ImageUploadHandler();
+            $img_location = $img_handler->save($request->cover, "products/".$product->id, 'cover');
+            $product->update([
+                'cover' => $img_location['path'],
+            ]);
+        }
+        if($request->files->get('files') != null)
+        {
+
+            $file_handler = new FileUploadHandler();
+            $file_location = $file_handler->save($request->files->get('files'), "products/".$product->id, "files");
+            $product->update([
+                'files' => $file_location['path'],
+            ]);
+
+        }
+
+
 
         $post = $project->posts()->create([
             'created_at' => now(),
@@ -143,6 +167,31 @@ class ProjectsController extends Controller
 
         return redirect()->route('projects.show_by_user', Auth::user());
     }
+
+
+    protected function deldir($dir) {
+        //先删除目录下的文件：
+        $dh = opendir($dir);
+        while ($file = readdir($dh)) {
+            if($file != "." && $file!="..") {
+                $fullpath = $dir."/".$file;
+                if(!is_dir($fullpath)) {
+                    unlink($fullpath);
+                } else {
+                    $this->deldir($fullpath);
+                }
+            }
+        }
+        closedir($dh);
+
+        //删除当前文件夹：
+        if(rmdir($dir)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function destroy(Project $project)
     {
         $this->authorize('belong', $project);
@@ -151,7 +200,23 @@ class ProjectsController extends Controller
 //                ->get();
 //        $post = $post[0];
 //        $product->delete();
+
+        if($product->cover != "img/default.jpg")
+        {
+            $cover = $_SERVER['DOCUMENT_ROOT'].'uploads/images/products/'.$product->id;
+            $this->deldir($cover);
+        }
+        if($product->files != '#')
+        {
+            $files = $_SERVER['DOCUMENT_ROOT'].'uploads/files/products/'.$product->id;
+            $this->deldir($files);
+        }
+
+
         $project->delete();
+
+
+
         return redirect()->route('projects.show_by_user', Auth::user());
     }
 

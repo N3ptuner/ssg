@@ -2,9 +2,15 @@
 @section('title', '工具')
 
 @section('content')
-    <table  style="border:3px #cccccc solid;" cellpadding="10" border='1'>
-        @foreach($tools as $project)
-            @include('projects._project_home_card')
-        @endforeach
-    </table>
+    <div class="jumbotron form-inline">
+        @if($tools->isEmpty())
+            <p class="text-sm-center">
+                暂时空空如也~
+            </p>
+        @else
+            @foreach($tools as $product)
+                @include("products._card")
+            @endforeach
+        @endif
+    </div>
 @stop

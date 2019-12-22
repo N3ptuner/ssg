@@ -59,6 +59,8 @@ class StaticPagesController extends Controller
                     ->take(10)
                     ->get();
 
-        return view('staticpages.home', compact('games', 'musics', 'pictures', 'tools'));
+        $tags = ['tag1', 'tag2', 'tag3'];
+
+        return view('staticpages.home', compact('tags','games', 'musics', 'pictures', 'tools'));
     }
 }

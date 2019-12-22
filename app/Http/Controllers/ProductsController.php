@@ -9,6 +9,16 @@ use App\Product;
 
 class ProductsController extends Controller
 {
+    public function show_by_tags(Request $request)
+    {
+        $tags = $request->tags;
+
+
+
+        return view("products.show_by_tags", compact('tags'));
+
+
+    }
     public function store(Request $request)
     {
 //        $this->validate($request, [
