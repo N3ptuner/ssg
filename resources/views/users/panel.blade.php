@@ -6,6 +6,8 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ route('projects.show_by_user', Auth::user()) }}">项目管理</a>
             <a class="dropdown-item" href="{{ route('users.edit', Auth::user()) }}">个人设置</a>
+            <a class="dropdown-item" href="{{ route('follows.followings', Auth::user()) }}">关注列表</a>
+            <a class="dropdown-item" href="{{ route('follows.followers', Auth::user()) }}">粉丝</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" id="logout" href="#">
                 <form action="{{ route('logout') }}" method="POST">

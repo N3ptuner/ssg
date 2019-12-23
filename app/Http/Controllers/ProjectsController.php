@@ -21,6 +21,8 @@ class ProjectsController extends Controller
             'except'=>['show']
         ]);
     }
+
+
     public function show_by_user(User $user)
     {
         $projects = $user->projects()
@@ -80,12 +82,16 @@ class ProjectsController extends Controller
     }
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'project_name' => Rule::unique('projects', "name")->where(function ($query) {
+                return $query->where('creator_id', Auth::user()->id);
+            }),
+            'product_name' => 'required|unique:products,name',
+        ]);
 
         //dd($request->files);
 //        $this->validate($request, [
-//            'project_name' => ['required|max:50', Rule::unique('projects')->where(function ($query) {
-//                return $query->where('creator_id', Auth::user()->id);
-//            })],
+//            'project_name' => ['required|max:50',
 //            'content_md' => 'required',
 //            'release_status' => ['required', Rule::in(['released', 'developing'])],
 //            'visibility' => ['required', Rule::in(['public', 'draft'])],
@@ -147,6 +153,14 @@ class ProjectsController extends Controller
             ]);
 
         }
+        //dd($request->tag_list);
+        if($request->tag_list != "")
+        {
+            //dd("test info");
+            $product->update([
+               'tag_list'=>$request->tag_list,
+            ]);
+        }
 
 
 
@@ -201,7 +215,7 @@ class ProjectsController extends Controller
 //        $post = $post[0];
 //        $product->delete();
 
-        if($product->cover != "img/default.jpg")
+        if($product->cover != "img/default_img.jpg")
         {
             $cover = $_SERVER['DOCUMENT_ROOT'].'uploads/images/products/'.$product->id;
             $this->deldir($cover);
@@ -232,8 +246,74 @@ class ProjectsController extends Controller
     {
         $this->authorize('belong', $project);
 
-        $project->update($request);
 
 
+        $project->update([
+            'name' => $request->project_name,
+            'visibility' => $request->visibility,
+            'template_id' => $request->template_id,
+            'updated_at' => now(),
+        ]);
+
+        $product = $project->product()->update([
+            'updated_at' => now(),
+            'name' => $request->product_name,
+            'introduction' => $request->product_introduction,
+            'classification' => $request->classification,
+            'tag_list' => '#',
+            'release_status' => $request->release_status,
+        ]);
+
+        $product = Product::where('id', $project->id)->get()[0];
+
+
+        if($request->cover != null)
+        {
+            $img_handler = new ImageUploadHandler();
+            $img_location = $img_handler->save($request->cover, "products/".$product->id, 'cover');
+            $product->update([
+                'cover' => $img_location['path'],
+            ]);
+        }
+        if($request->files->get('files') != null)
+        {
+
+            $file_handler = new FileUploadHandler();
+            $file_location = $file_handler->save($request->files->get('files'), "products/".$product->id, "files");
+            $product->update([
+                'files' => $file_location['path'],
+            ]);
+
+        }
+        //dd($request->tag_list);
+        if($request->tag_list != "")
+        {
+            //dd("test info");
+            $product->update([
+                'tag_list'=>$request->tag_list,
+            ]);
+        }
+
+
+
+        $post = $project->posts()->update([
+            'updated_at' => now(),
+            'content_md' => $request->content_md,
+        ]);
+
+
+        $post = Post::where('project_id', $project->id)
+            ->where('post_type', 'introduction')
+            ->get();
+        $post = $post[0];
+        $comments = Comment::where('parent_id', $post->id)
+            ->where('parent_type', 'App\Post')
+            ->get();
+        $creator = User::where('id', $project->creator_id)
+            ->get();
+        $creator = $creator[0];
+        $product = $project->product()->get()[0];
+        //$comments = $post->comments();
+        return view('projects.show', compact( 'product','project', 'post', 'comments', 'creator'));
     }
 }

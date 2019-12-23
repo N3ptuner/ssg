@@ -2,7 +2,6 @@
 @section('title', '主页')
 
 @section('content')
-    @include("staticpages.tags_search")
     <div class="jumbotron">
         <h2>
             游戏

@@ -9,6 +9,12 @@ use App\Product;
 
 class ProductsController extends Controller
 {
+    public function show_by_user(User $user)
+    {
+        $products = $user->products()->get();
+
+        return view(route("products.show_by_user", compact(products)));
+    }
     public function show_by_tags(Request $request)
     {
         $tags = $request->tags;

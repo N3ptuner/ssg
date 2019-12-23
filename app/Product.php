@@ -26,6 +26,6 @@ class Product extends Model
         return $this->belongsTo(Project::class, 'id');
     }
     protected $fillable=[
-        'introduction', 'cover', 'files', 'name', 'classification', 'release_status'
+        'tag_list','introduction', 'cover', 'files', 'name', 'classification', 'release_status'
     ];
 }

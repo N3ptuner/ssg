@@ -44,13 +44,16 @@ class UsersController extends Controller
         Auth::login($user);
         session()->flash('success', '注册成功');
 
-        return redirect()->route('users.show', [$user]);
+        return redirect()->route('home');
     }
     public function show(User $user)
     {
-        $this->authorize('self', $user);
+        $projects = $user->projects()
+                    ->where("visibility", "public")
+                    ->get();
 
-        return view('users.show', compact('user'));
+
+        return view('users.show', compact('user', 'projects'));
     }
 
 

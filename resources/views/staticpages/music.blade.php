@@ -2,8 +2,10 @@
 @section('title', '音乐')
 
 @section('content')
+    @include("staticpages.tags_search")
+
     <div class="jumbotron form-inline">
-        @if($music->isEmpty())
+        @if($musics->isEmpty())
             <p class="text-sm-center">
                 暂时空空如也~
             </p>

@@ -12,13 +12,16 @@ class FollowsController extends Controller
     {
         Auth::user()->follow($user);
 
-        return redirect()->route('users.index');
+//        return redirect()->route('users.index');
+        return redirect()->back();
+
 
     }
     public function destroy(User $user)
     {
         Auth::user()->unfollow($user);
-        return redirect()->route('users.index');
+//        return redirect()->route('users.index');
+        return redirect()->back();
 
     }
     public function followers(User $user)

@@ -20,6 +20,13 @@ class UsersTableSeeder extends Seeder
            'created_at'=>now(),
             'updated_at'=>now(),
         ]);
+        DB::table('users')->insert([
+            'username'=>'Scorpia',
+            'email'=>'1@qq.com',
+            'password'=>bcrypt('111111'),
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ]);
 
         $faker = app(Faker\Generator::class);
 

@@ -2,6 +2,8 @@
 @section('title', '图片')
 
 @section('content')
+    @include("staticpages.tags_search")
+
 
     <div class="jumbotron form-inline">
         @if($pictures->isEmpty())

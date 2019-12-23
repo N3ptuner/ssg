@@ -1,8 +1,8 @@
 
 <div class="card" style="margin-top: 20px; margin-bottom: 20px;">
     <div class="card-header form-inline">
-        <a href="{{ route("users.index", $creator) }}">
-            <h6>{{ $creator->username }}</h6>
+        <a href="{{ route("users.index", App\User::where("id", $comment->creator_id)->get()[0]) }}">
+            <h6>{{ \App\User::where("id", $comment->creator_id)->get()[0]->username }}</h6>
         </a>
         <h6>
             <small>&nbsp; {{ $comment->created_at->diffForHumans()}}</small>

@@ -2,6 +2,8 @@
 @section('title', '工具')
 
 @section('content')
+    @include("staticpages.tags_search")
+
     <div class="jumbotron form-inline">
         @if($tools->isEmpty())
             <p class="text-sm-center">

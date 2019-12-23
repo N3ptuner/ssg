@@ -1,5 +1,6 @@
 @php
-    $project = $product->project()->get()[0];
+   //dd($product);
+   $project = $product->project()->get()[0];
 @endphp
 <div class="col-md-3">
     <div class="card">
